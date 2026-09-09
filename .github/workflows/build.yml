@@ -1,0 +1,89 @@
+name: Build Rafiq Al-Quran Android
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build APK and AAB
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Flutter doctor
+        run: flutter doctor -v
+
+      - name: Restore packages
+        run: flutter pub get
+
+      - name: Analyze source
+        run: flutter analyze
+
+      - name: Create Android project when missing
+        run: |
+          if [ ! -d android ]; then
+            flutter create --platforms=android --org com.abdulrahman.rafiq_al_quran .
+          fi
+
+      - name: Configure Android application label and permissions
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          p = Path("android/app/src/main/AndroidManifest.xml")
+          text = p.read_text(encoding="utf-8")
+
+          permission = '<uses-permission android:name="android.permission.INTERNET"/>'
+          if permission not in text:
+              text = text.replace(
+                  '<manifest xmlns:android="http://schemas.android.com/apk/res/android">',
+                  '<manifest xmlns:android="http://schemas.android.com/apk/res/android">\n    ' + permission,
+                  1,
+              )
+
+          text = text.replace('android:label="rafiq_al_quran"', 'android:label="رفيق القرآن"')
+          p.write_text(text, encoding="utf-8")
+          PY
+
+      - name: Restore packages after Android generation
+        run: flutter pub get
+
+      - name: Build release APK
+        run: flutter build apk --release
+
+      - name: Build release AAB
+        run: flutter build appbundle --release
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Rafiq-Al-Quran-APK
+          path: build/app/outputs/flutter-apk/app-release.apk
+          if-no-files-found: error
+
+      - name: Upload AAB
+        uses: actions/upload-artifact@v4
+        with:
+          name: Rafiq-Al-Quran-AAB
+          path: build/app/outputs/bundle/release/app-release.aab
+          if-no-files-found: error
