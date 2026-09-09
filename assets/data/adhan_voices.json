@@ -1,0 +1,28 @@
+{
+  "voices": [
+    {
+      "id": "makkah",
+      "name": "الأذان المكي",
+      "type": "remote",
+      "asset": "assets/sounds/adhan/makkah.mp3"
+    },
+    {
+      "id": "madinah",
+      "name": "أذان المدينة المنورة",
+      "type": "remote",
+      "asset": "assets/sounds/adhan/madinah.mp3"
+    },
+    {
+      "id": "calm",
+      "name": "أذان هادئ",
+      "type": "remote",
+      "asset": "assets/sounds/adhan/calm.mp3"
+    },
+    {
+      "id": "default",
+      "name": "الصوت الافتراضي",
+      "type": "system",
+      "asset": ""
+    }
+  ]
+}
