@@ -1,0 +1,25 @@
+{
+  "voices": [
+    {
+      "id": "adhan_short",
+      "name": "أذان قصير",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/e/e7/Adhan.ogg",
+      "license": "CC0 1.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Adhan.ogg"
+    },
+    {
+      "id": "beautiful_adhan",
+      "name": "أذان جميل",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Beautiful_adhan.ogg",
+      "license": "CC0 1.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Beautiful_adhan.ogg"
+    },
+    {
+      "id": "adhan_public_domain",
+      "name": "أذان من المدينة",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Oraci%C3%B3n_Al-Azzan.ogg",
+      "license": "Public Domain",
+      "source": "https://commons.wikimedia.org/wiki/File:Oraci%C3%B3n_Al-Azzan.ogg"
+    }
+  ]
+}
